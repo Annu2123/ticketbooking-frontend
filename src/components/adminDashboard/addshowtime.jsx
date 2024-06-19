@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast'
 export default function ShowtimeForm() {
+  const location =useLocation()
+  const navigate=useNavigate()
+  console.log("locationData",location.state)
     const {id}=useParams()
+    const [servererror,setServererror]=useState([])
   const [formData, setFormData] = useState({
-    movie_id: '',
+    movie_id:location.state.title ||  '',
     showtime_date_time: '',
     available_seats: '',
     total_seats: ''
@@ -42,8 +48,15 @@ export default function ShowtimeForm() {
       setErrors(validationErrors)
       return
     }
+    const formData1={
+      movie_id:location.state._id ,
+    showtime_date_time:formData.showtime_date_time,
+    available_seats:formData. available_seats,
+    total_seats:formData. total_seats
+    }
+    console.log("formdat",formData1)
     try {
-      const response = await axios.post('http://localhost:3001/api/showtime', formData)
+      const response = await axios.post('http://localhost:3001/api/showtime', formData1)
       console.log('Showtime added:', response.data)
       setFormData({
         movie_id: '',
@@ -53,8 +66,12 @@ export default function ShowtimeForm() {
       })
       setErrors({})
       console.log("showtimeaddes",response.data)
+      toast.success("showtime added succesFully")
+      navigate("/allmovielist")
     } catch (error) {
       console.error('Error adding showtime:', error);
+      toast.error("error in adding showtime")
+      setServererror(error.response.data.errors)
     }
   }
 
@@ -64,18 +81,13 @@ export default function ShowtimeForm() {
       <form onSubmit={handleSubmit} noValidate>
         <div className="mb-3">
           <label htmlFor="movieSelect" className="form-label">Select Movie</label>
-          <select
+          <input
             id="movieSelect"
             name="movie_id"
             className={`form-select ${errors.movie_id ? 'is-invalid' : ''}`}
             value={formData.movie_id}
             onChange={handleChange}
-          >
-            <option value="">Select a movie</option>
-            {movies.map(movie => (
-              <option key={movie.id} value={movie.id}>{movie.title}</option>
-            ))}
-          </select>
+          />
           {errors.movie_id && <div className="invalid-feedback">{errors.movie_id}</div>}
         </div>
         <div className="mb-3">
@@ -113,6 +125,11 @@ export default function ShowtimeForm() {
             onChange={handleChange}
           />
           {errors.total_seats && <div className="invalid-feedback">{errors.total_seats}</div>}
+        </div>
+        <div>
+          {servererror.length > 0 && servererror.map((ele)=>{
+            return <li>{ele.msg}</li>
+          })}
         </div>
         <button type="submit" className="btn btn-primary">Add Showtime</button>
       </form>

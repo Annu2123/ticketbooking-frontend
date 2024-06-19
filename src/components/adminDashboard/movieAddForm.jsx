@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import toast, { Toaster } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom';
 export default function MovieForm () {
   const [formData, setFormData] = useState({ title: '', genre: '' })
   const [errors, setErrors] = useState({})
   const [movies,setMovies]=useState([])
-
+const navigate=useNavigate()
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({
@@ -34,13 +35,22 @@ export default function MovieForm () {
       setErrors(validationErrors)
       return
     }
-
+ const formData1={
+  title:formData.title,
+    genre:formData.genre
+ }
     try {
-      const response = await axios.post('https://your-backend-api/movies', formData)
+      const response = await axios.post('http://localhost:3001/api/movie', formData1,{
+        headers:{
+          Authorization:localStorage.getItem("token")
+        }
+      })
       console.log('Movie added:', response.data)
       setMovies(response.data)
       setFormData({ title: '', genre: '' })
       setErrors({})
+      toast.success("movie added succesfully")
+      navigate("/allmovielist")
     } catch (error) {
       console.error('Error adding movie:', error)
     }

@@ -95,7 +95,7 @@ console.log("bookings",bookings)
         <>
         <div className="container">
   <h2>Booked Tickets</h2>
-  <div className="row">
+ {bookings.length > 0 ? (<div className="row">
     {bookings?.map(ticket => (
       <div key={ticket._id} className="col-md-4 mb-4">
         <div className="card">
@@ -115,7 +115,9 @@ console.log("bookings",bookings)
         </div>
       </div>
     ))}
-  </div>
+  </div>):(<div className="text-center" style={{ paddingTop: '110px' }}>
+        <p className="display-4">No Bookings Found</p>
+    </div>)}
 </div>
         </>
     )

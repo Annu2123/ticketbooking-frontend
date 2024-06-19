@@ -13,6 +13,8 @@ import ShowtimeForm from './components/adminDashboard/addshowtime'
 import AdminHome from './components/adminDashboard/adminHome'
 import EditBooking from './components/booking/editBooking'
 import AllBooking from './components/adminDashboard/bookings'
+import MovieForm from './components/adminDashboard/movieAddForm'
+import AllMovieLIst from './components/adminDashboard/allMovies'
 
 function App() {
   
@@ -28,6 +30,9 @@ function App() {
       <Route path='/showtime/:id' element={<ShowtimeForm/>}/>
       <Route path='/editBooking' element={<EditBooking/>}/>
       <Route path='/allbookings' element={<AllBooking/>}/>
+      <Route path='/addmovies' element={<MovieForm/>}/>
+      <Route path='/allmovielist' element={<AllMovieLIst/>}/>
+      <Route path='/addshowtime' element={<ShowtimeForm/>}/>
       {/* <Route path='/adminHome' element={<AdminHome/>}/> */}
      </Routes>
     </BrowserRouter>

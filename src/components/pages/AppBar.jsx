@@ -34,10 +34,13 @@ export default function AppBar(){
         ) : localStorage.getItem("token") && localStorage.getItem("user") === "admin" ? (
           <>
             <li className="nav-item">
-              <Link className="nav-link" to="/movieList">Movies</Link>
+              <Link className="nav-link" to="/allmovielist">Movies</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/allBookings">All Bookings</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/addmovies">add Movies</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/" onClick={handleLogout}>Logout</Link>

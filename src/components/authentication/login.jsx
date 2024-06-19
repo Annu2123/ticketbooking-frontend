@@ -53,6 +53,7 @@ export default function  Login () {
         toast.success("login success")
       }catch(err){
         console.log(err)
+        toast.error(err.response.data.error)
       }
     }
   }
