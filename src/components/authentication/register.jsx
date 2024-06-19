@@ -11,6 +11,7 @@ export default function Register() {
     email: '',
     password: ''
   });
+  const [servererror,setServererror]=useState([])
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -67,8 +68,8 @@ export default function Register() {
       toast.success("register success")
      }catch(err){
       console.log(err)
+      setServererror(err.response.data.errors)
      }
-      console.log('Form submitted:', formData)
     }
   };
 
@@ -113,6 +114,11 @@ export default function Register() {
                 onChange={handleChange}
               />
               {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+            </div>
+            <div>
+              {servererror.length > 0 && servererror.map((ele,i)=>{
+                return <li key={i} style={{color:"red"}}>{ele.msg}</li>
+              })}
             </div>
             <button type="submit" className="btn btn-primary">Register</button>
           </form>
