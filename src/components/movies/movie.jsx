@@ -24,7 +24,7 @@ export default function MoviesList() {
   return (
     <div className="container">
       <h2>Movies List</h2>
-      <div className="row">
+     {movies.length > 0 ? (<div className="row">
         {movies?.map(movie => (
           <div key={movie._id} className="col-md-4 mb-4">
             <div className="card">
@@ -40,7 +40,9 @@ export default function MoviesList() {
             </div>
           </div>
         ))}
-      </div>
+      </div>):(<div className="text-center" style={{ paddingTop: '110px' }}>
+        <p className="display-4">No Movies Found</p>
+    </div>)}
     </div>
   )
 }
