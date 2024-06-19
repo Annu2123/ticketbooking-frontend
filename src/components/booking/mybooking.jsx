@@ -15,13 +15,13 @@ const filterUpdate=(id)=>{
   })
   setBookings(...result)
 }
-const deleteFilter=(id)=>{
+const deleteFilter=(data)=>{
   const result=bookings.filter((ele)=>{
-    if(ele._id != id){
-      return ele
-    }
+    // if(ele._id != id){
+      return ele._id != data._id
+    // }
   })
-  setBookings(...result)
+  setBookings(result)
 }
 useEffect(()=>{
     (async()=>{
@@ -58,7 +58,7 @@ const handleDelete=async(id)=>{
       }
       })
       console.log("delteresponse",response.data)
-      deleteFilter()
+      deleteFilter(response.data)
       toast.success("ticket deleted succesfull")
   }catch(err){
     console.log(err)
