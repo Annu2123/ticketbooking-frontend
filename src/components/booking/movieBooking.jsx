@@ -88,6 +88,9 @@ export default function BookingForm() {
     }
   }
   // Render seats based on showtime capacity
+  useEffect(()=>{
+    renderSeats()
+  },[selectedTimeId])
   const renderSeats = () => {
     if (!showtimeDetails) return null
 
